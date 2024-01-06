@@ -1,12 +1,12 @@
-# Exceptions
+# Винятки (Exceptions)
+Винятки стаються, коли у програмі виникають _виняткові_ ситуації. Наприклад, що робити програмі, коли ви намагаєтеся прочитати файл, якого не існує? Або якщо ви випадково видалили цей файл під час виконання програми? Такі ситуації вирішуються за допомогою **винятків** _(exceptions)_.
 
-Exceptions occur when _exceptional_ situations occur in your program. For example, what if you are going to read a file and the file does not exist? Or what if you accidentally deleted it when the program was running? Such situations are handled using **exceptions**.
+А що, якщо ви написали неправильні інструкіцї вашій програмі? За це відповідає Python, який **піднімає** _(raises)_ руки вгору і повідомляє вам, що тут є **помилка** _(error)_.
 
-Similarly, what if your program had some invalid statements? This is handled by Python which **raises** its hands and tells you there is an **error**.
 
-## Errors
+## Помилки (Errors)
 
-Consider a simple `print` function call. What if we misspelt `print` as `Print`? Note the capitalization. In this case, Python _raises_ a syntax error.
+Уявімо, що ми хочемо викликати функцію `print`. Що, якщо ми випадково напишемо не `print`, а `Print`? Зверніть увагу на велику літеру. У цьому випадку Python видасть синтаксичну помилку.
 
 ```python
 >>> Print("Hello World")
@@ -17,11 +17,11 @@ NameError: name 'Print' is not defined
 Hello World
 ```
 
-Observe that a `NameError` is raised and also the location where the error was detected is printed. This is what an **error handler** for this error does.
+Зверніть увагу, що падає `NameError`, а також Python підказує місце, у якому ця помилка з'явилась. Це робить **обробник помилок** _(error handler)_.
 
-## Exceptions
+## Винятки (Exceptions)
 
-We will **try** to read input from the user.  Enter the first line below and hit the `Enter` key.  When your computer prompts you for input, instead press `[ctrl-d]` on a Mac or `[ctrl-z]` with Windows and see what happens.  (If you're using Windows and neither option works, you can try `[ctrl-c]` in the Command Prompt to generate a KeyboardInterrupt error instead).
+**Спробуємо** _(try)_ прочитати введені користувачем дані.  Введіть перший рядок нижче і натисніть клавішу `Enter`.  Коли ваш комп'ютер попросить вас ввести щось, натисніть `[ctrl-d]` на Mac або `[ctrl-z]` у Windows і подивіться, що станеться.  (Якщо ви використовуєте Windows і жоден з варіантів не працює, ви можете спробувати `[ctrl-c]` у командному рядку, щоб згенерувати помилку переривання клавіатури).
 
 ```python
 >>> s = input('Enter something --> ')
@@ -30,13 +30,13 @@ Enter something --> Traceback (most recent call last):
 EOFError
 ```
 
-Python raises an error called `EOFError` which basically means it found an *end of file* symbol (which is represented by `ctrl-d`) when it did not expect to see it.
+Python видає помилку `EOFError`, яка означає, що він знайшов символ *кінець файлу* (EOF - end of file, відповідає натиснутій `ctrl-d`), хоча зовсім не очікував його побачити.
 
-## Handling Exceptions
+## Обробка винятків
 
-We can handle exceptions using the `try..except` statement.  We basically put our usual statements within the try-block and put all our error handlers in the except-block.
+Ми можемо ловити та обробляти винятки за допомогою інструкції `try..except`.  По суті, ми розміщуємо код для виконання у блоці `try`, а всі обробники помилок - у блоці `except`.
 
-Example (save as `exceptions_handle.py`):
+Приклад (збережіть у файлі `exceptions_handle.py`):
 
 <pre><code class="lang-python">{% include "./programs/exceptions_handle.py" %}</code></pre>
 
@@ -44,25 +44,24 @@ Output:
 
 <pre><code>{% include "./programs/exceptions_handle.txt" %}</code></pre>
 
-**How It Works**
+**Як це працює**
 
-We put all the statements that might raise exceptions/errors inside the `try` block and then put handlers for the appropriate errors/exceptions in the `except` clause/block. The `except` clause can handle a single specified error or exception, or a parenthesized list of errors/exceptions. If no names of errors or exceptions are supplied, it will handle _all_ errors and exceptions.
+Ми вставляємо весь код, який може видати виключення/помилки, всередину блоку `try`, а потім створюємо обробники відповідних помилок/винятків у блоці `except`. Оператор `except` може обробляти одну вказану помилку або виняток, або список помилок/винятків у круглих дужках. Якщо не вказано жодної назви помилки або винятку, буде оброблено _усі_ помилки та винятки.
 
-Note that there has to be at least one `except` clause associated with every `try` clause. Otherwise, what's the point of having a try block?
+Зверніть увагу, що для кожного блоку `try` має бути оператор `except`. Інакше, який сенс у блоці try?
 
-If any error or exception is not handled, then the default Python handler is called which just stops the execution of the program and prints an error message. We have already seen this in action above.
+Якщо будь-яка помилка або виняток не обробляється в коді вами, то викликається стандартний обробник Python, який просто зупиняє виконання програми в тому ж місці і виводить повідомлення про помилку. Ми вже бачили це на прикладі `NameError` вище.
 
-You can also have an `else` clause associated with a `try..except` block. The `else` clause is executed if no exception occurs.
+Ви також можете використовувати оператор `else` після блоку `try..except`. Якщо виняток не виникне, то виконається код всередині блоку `else`.
 
-In the next example, we will also see how to get the exception object so that we can retrieve additional information.
+У наступному прикладі ми побачимо, як отримати об'єкт винятку, щоб мати додаткову інформацію.
 
-## Raising Exceptions
+## Виклик винятків (Raising Exceptions)
+Ви можете викликати виняток за допомогою оператору `raise`, вказавши ім'я помилки/винятку та об'єкт винятку, який потрібно викинути.
 
-You can _raise_ exceptions using the `raise` statement by providing the name of the error/exception and the exception object that is to be _thrown_.
+Помилка або виключення, яке ви можете викликати, має бути класом, який наслідує клас `Exception`.
 
-The error or exception that you can raise should be a class which directly or indirectly must be a derived class of the `Exception` class.
-
-Example (save as `exceptions_raise.py`):
+Приклад (збережіть у файлі `exceptions_raise.py`):
 
 <pre><code class="lang-python">{% include "./programs/exceptions_raise.py" %}</code></pre>
 
